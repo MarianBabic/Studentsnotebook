@@ -1,5 +1,7 @@
 package sk.upjs.vma.studentsnotebook;
 
+import android.database.Cursor;
+
 import java.io.Serializable;
 
 public class Subject implements Serializable {
@@ -35,6 +37,15 @@ public class Subject implements Serializable {
     @Override
     public String toString() {
         return name;
+    }
+
+    public static Subject newInstance(Cursor c){
+        Subject subject = new Subject();
+        int _id = c.getInt(c.getColumnIndex("_id"));
+        subject.setId((long) _id);
+        String _name = c.getString(c.getColumnIndex("name"));
+        subject.setName( _name);
+        return subject;
     }
 
 }

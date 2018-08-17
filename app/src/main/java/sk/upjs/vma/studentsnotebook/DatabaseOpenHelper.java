@@ -19,6 +19,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL(createTableSubject());
 
         insertSampleEntry(db, "vma1");
+        insertSampleEntry(db, "paz1a");
+        insertSampleEntry(db, "paz1b");
     }
 
     private void insertSampleEntry(SQLiteDatabase db, String description) {

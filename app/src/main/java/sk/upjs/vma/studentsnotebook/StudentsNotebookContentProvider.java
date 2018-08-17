@@ -28,8 +28,14 @@ public class StudentsNotebookContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
+        String[] whereArgs = {selection};
+        int affectedRows = db.delete(
+                StudentsNotebookContract.Subject.TABLE_NAME,
+                StudentsNotebookContract.Subject._ID + "=?",
+                whereArgs);
+        getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
+        return affectedRows;
     }
 
     @Override
@@ -42,21 +48,23 @@ public class StudentsNotebookContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
-
-        Log.d("PROVIDER", values.toString());
-
         long id = db.insert(StudentsNotebookContract.Subject.TABLE_NAME, null, values);
-
         getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
-
         return Uri.withAppendedPath(StudentsNotebookContract.Subject.CONTENT_URI, String.valueOf(id));
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
+        String[] whereArgs = {selection};
+        int affectedRows = db.update(
+                StudentsNotebookContract.Subject.TABLE_NAME,
+                values,
+                StudentsNotebookContract.Subject._ID + "=?",
+                whereArgs);
+        getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
+        return affectedRows;
     }
 
 }

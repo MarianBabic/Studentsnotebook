@@ -1,19 +1,20 @@
 package sk.upjs.vma.studentsnotebook;
 
+import android.content.AsyncQueryHandler;
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SubjectDetailActivity extends AppCompatActivity {
 
-    private SubjectDao subjectDao = SubjectDao.INSTANCE;
     private Subject subject;
-
     private EditText editTextSubjectName;
-
     private boolean ignoreSaveOnFinish;
 
     @Override
@@ -23,18 +24,15 @@ public class SubjectDetailActivity extends AppCompatActivity {
 
         editTextSubjectName = findViewById(R.id.editTextSubjectName);
 
-        Long subjectId = (Long) getIntent().getSerializableExtra(
-                SubjectListActivity.SUBJECT_ID_EXTRA);
+        // pripad ak editujem existujucu ulohu
+        // tiez aj: getIntent().getExtras().getSerializable("Subject");
+        subject = (Subject) getIntent().getSerializableExtra("Subject");
 
-        Log.d("DETAIL", "intent includes " + subjectId);
-
-        if (subjectId == null) {
-            // pripad ak vytvaram novu ulohu
+        // pripad ak vytvaram novu ulohu
+        if (subject == null)
             subject = new Subject();
-        } else {
-            // pripad ak editujem existujucu ulohu
-            subject = subjectDao.getSubject(subjectId);
-        }
+
+        Log.e(SubjectDetailActivity.class.getName(), "DETAIL: " + subject);
 
         editTextSubjectName.setText(subject.getName());
     }
@@ -53,7 +51,17 @@ public class SubjectDetailActivity extends AppCompatActivity {
         }
 
         subject.setName(editTextSubjectName.getText().toString());
-        subjectDao.saveOrUpdate(subject);
+        ContentValues values = new ContentValues();
+        values.put(StudentsNotebookContract.Subject.NAME, subject.getName());
+
+        // save new subject
+        if (subject.getId() == null) {
+            insertIntoContentProvider(values);
+        }
+        // update existing subject
+        else {
+            getContentResolver().update(StudentsNotebookContract.Subject.CONTENT_URI, values, Long.toString(subject.getId()), null);
+        }
     }
 
     @Override
@@ -67,7 +75,7 @@ public class SubjectDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.menu_item_delete) {
-            subjectDao.delete(subject);
+            delete();
             // priznak aby sa subject neukladal po navrate z detail aktivity
             ignoreSaveOnFinish = true;
             finish();
@@ -84,6 +92,36 @@ public class SubjectDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void insertIntoContentProvider(ContentValues values) {
+        // normal
+        //getContentResolver().insert(StudentsNotebookContract.Subject.CONTENT_URI, values);
+
+        // asynchronne
+        // abstraktna trieda
+        AsyncQueryHandler queryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onInsertComplete(int token, Object cookie, Uri uri) {
+                Toast.makeText(SubjectDetailActivity.this, "Saved: " + cookie.toString(), Toast.LENGTH_LONG).show();
+            }
+        };
+        queryHandler.startInsert(0, subject, StudentsNotebookContract.Subject.CONTENT_URI, values);
+    }
+
+    private void delete() {
+        // normal
+        //getContentResolver().delete(StudentsNotebookContract.Subject.CONTENT_URI, Long.toString(subject.getId()), null);
+
+        // asynchronne
+        // abstraktna trieda
+        AsyncQueryHandler queryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onDeleteComplete(int token, Object cookie, int result) {
+                Toast.makeText(SubjectDetailActivity.this, "Deleted: " + cookie.toString(), Toast.LENGTH_LONG).show();
+            }
+        };
+        queryHandler.startDelete(0, subject, StudentsNotebookContract.Subject.CONTENT_URI, Long.toString(subject.getId()), null);
     }
 
 }

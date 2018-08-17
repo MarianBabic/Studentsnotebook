@@ -4,10 +4,13 @@
     xmlns:card="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    card:cardBackgroundColor="@color/colorAccent"
+    card:cardBackgroundColor="@color/colorBlue"
     android:minHeight="96dp"
     >
-    <TextView android:id="@+id/cardText"
+    <TextView android:id="@+id/cardId"
+        android:text="@+id/cardText"
+        android:textSize="30dp"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

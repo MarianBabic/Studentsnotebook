@@ -1,13 +1,10 @@
 package sk.upjs.vma.studentsnotebook;
 
 import android.app.LoaderManager;
-import android.content.AsyncQueryHandler;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,24 +13,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.List;
 
 public class SubjectListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private SubjectDao subjectDao = SubjectDao.INSTANCE;
-
     private ListView listView;
-
-    public static final String SUBJECT_ID_EXTRA = "subjectId";
 
     private static final int SUBJECTS_LOADER_ID = 3;
 
@@ -50,54 +37,61 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Log.d(SubjectListActivity.class.getName(), "on item click " + position);
+                Cursor c = (Cursor) adapter.getItem(position);
+                Subject subject = Subject.newInstance(c);
+
+                Log.e(SubjectListActivity.class.getName(), "LIST: " + subject);
 
                 Intent intent = new Intent(SubjectListActivity.this,
                         SubjectDetailActivity.class);
 
-                // TODO
-                Subject subject = subjectDao.list().get(position);
+                intent.putExtra("Subject", subject);
 
-                // TODO
-                intent.putExtra(SUBJECT_ID_EXTRA, subject.getId());
                 startActivity(intent);
             }
         });
     }
 
     private ListAdapter initializeAdapter() {
-        String[] from = {StudentsNotebookContract.Subject.NAME };
+        String[] from = {StudentsNotebookContract.Subject.NAME, StudentsNotebookContract.Subject._ID};
         // TODO: R.id.editTextSubjectName / R.id.cardText
-        int[] to = {R.id.cardText};
+        int[] to = {R.id.cardId, R.id.cardText};
         // TODO: R.layout.activity_subject_detail / R.layout.subject
         this.adapter = new SimpleCursorAdapter(this, R.layout.subject, null, from, to, 0);
         return this.adapter;
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-////        List<Subject> list = subjectDao.list();
-////
-////        ListAdapter adapter = new ArrayAdapter<Subject>(this,
-////                android.R.layout.simple_list_item_1, list) {
-////            @Override
-////            public View getView(int position, View convertView, ViewGroup parent) {
-////                TextView listItemView = (TextView) super.getView(position, convertView, parent);
-////
-////                Subject subject = getItem(position);
-////
-////                listItemView.setText(subject.getName());
-////                return listItemView;
-////            }
-////        };
-////
-////        // adapter sa nastavuje v onResume, aby sa zoznam aktualizoval pri navrate z DetailActivity
-////        listView.setAdapter(adapter);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // TODO
+
+
+//        List<Subject> list = subjectDao.list();
 //
+//        ListAdapter adapter = new ArrayAdapter<Subject>(this,
+//                android.R.layout.simple_list_item_1, list) {
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                TextView listItemView = (TextView) super.getView(position, convertView, parent);
+//
+//                Subject subject = getItem(position);
+//
+//                listItemView.setText(subject.getName());
+//                return listItemView;
+//            }
+//        };
+//
+//        // adapter sa nastavuje v onResume, aby sa zoznam aktualizoval pri navrate z DetailActivity
+//        listView.setAdapter(adapter);
+
+        // TODO
+
+//        this.listView = findViewById(R.id.listViewSubjects);
 //        this.listView.setAdapter(initializeAdapter());
 //        getLoaderManager().initLoader(SUBJECTS_LOADER_ID, Bundle.EMPTY, this);
-//    }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,22 +137,6 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         adapter.swapCursor(null);
-    }
-
-    private void insertIntoContentProvider(String name) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(StudentsNotebookContract.Subject.NAME, name);
-        // normal
-        //getContentResolver().insert(MyNoteContract.Note.CONTENT_URI, contentValues);
-        // asynchronne
-        // abstraktna trieda
-        AsyncQueryHandler queryHandler = new AsyncQueryHandler(getContentResolver()) {
-            @Override
-            protected void onInsertComplete(int token, Object cookie, Uri uri) {
-                Toast.makeText(SubjectListActivity.this, "Saved " + cookie.toString(), Toast.LENGTH_LONG).show();
-            }
-        };
-        queryHandler.startInsert(0, name, StudentsNotebookContract.Subject.CONTENT_URI, contentValues);
     }
 
 }
