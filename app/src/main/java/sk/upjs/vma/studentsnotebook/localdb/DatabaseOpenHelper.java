@@ -21,6 +21,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         insertSampleSubject(db, "vma1");
         insertSampleSubject(db, "paz1a");
+        insertSampleSubject(db, "paz1b");
 
         insertSampleNote(db, 1, "sample1", "sample1");
         insertSampleNote(db, 1, "sample2", "sample2");
@@ -59,12 +60,10 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         );
     }
 
-//    + " FOREIGN KEY (" + StudentsNotebookContract.Note.SUBJECT_ID + ") REFERENCES " + StudentsNotebookContract.Subject.TABLE_NAME + " (" + StudentsNotebookContract.Subject._ID + "),"
-
     private String createTableNote() {
         String sqlTemplate = "CREATE TABLE %s ("
                 + "%s INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "%s INTEGER,"
+                + "%s INTEGER REFERENCES " + StudentsNotebookContract.Subject.TABLE_NAME + " (" + StudentsNotebookContract.Subject._ID + "),"
                 + "%s TEXT,"
                 + "%s TEXT,"
                 + "%s INTEGER)";

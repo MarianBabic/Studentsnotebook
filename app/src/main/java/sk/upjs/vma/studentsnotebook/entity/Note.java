@@ -18,6 +18,13 @@ public class Note implements Serializable {
         // empty constructor
     }
 
+    public Note(Long id, Long subjectId, String title, String content) {
+        this.id = id;
+        this.subjectId = subjectId;
+        this.title = title;
+        this.content = content;
+    }
+
     public Note(Long subjectId, String title, String content) {
         this.subjectId = subjectId;
         this.title = title;

@@ -78,9 +78,21 @@ public class StudentsNotebookContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
-        long id = db.insert(StudentsNotebookContract.Subject.TABLE_NAME, null, values);
-        getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
-        return Uri.withAppendedPath(StudentsNotebookContract.Subject.CONTENT_URI, String.valueOf(id));
+        long id;
+        Uri result = null;
+
+        int match = sURIMatcher.match(uri);
+        switch (match) {
+            case SUBJECTS:
+                id = db.insert(StudentsNotebookContract.Subject.TABLE_NAME, null, values);
+                getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
+                result = Uri.withAppendedPath(StudentsNotebookContract.Subject.CONTENT_URI, String.valueOf(id));
+            case NOTES:
+                id = db.insert(StudentsNotebookContract.Note.TABLE_NAME, null, values);
+                getContext().getContentResolver().notifyChange(StudentsNotebookContract.Note.CONTENT_URI, null);
+                result = Uri.withAppendedPath(StudentsNotebookContract.Note.CONTENT_URI, String.valueOf(id));
+        }
+        return result;
     }
 
     @Override

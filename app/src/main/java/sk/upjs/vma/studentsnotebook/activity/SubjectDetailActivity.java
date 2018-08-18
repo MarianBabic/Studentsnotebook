@@ -12,7 +12,10 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Arrays;
+
 import sk.upjs.vma.studentsnotebook.R;
+import sk.upjs.vma.studentsnotebook.entity.Note;
 import sk.upjs.vma.studentsnotebook.localdb.StudentsNotebookContract;
 import sk.upjs.vma.studentsnotebook.entity.Subject;
 
@@ -41,7 +44,8 @@ public class SubjectDetailActivity extends AppCompatActivity {
 
         editTextSubjectName.setText(subject.getName());
 
-        getNotes();
+        if (subject.getId() != null)
+            getNotes();
     }
 
     @Override
@@ -63,7 +67,7 @@ public class SubjectDetailActivity extends AppCompatActivity {
 
         // save new subject
         if (subject.getId() == null) {
-            insertIntoContentProvider(values);
+            insertSubject(values);
         }
         // update existing subject
         else {
@@ -82,7 +86,7 @@ public class SubjectDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.menu_item_delete) {
-            delete();
+            deleteSubject();
             // priznak aby sa subject neukladal po navrate z detail aktivity
             ignoreSaveOnFinish = true;
             finish();
@@ -106,12 +110,30 @@ public class SubjectDetailActivity extends AppCompatActivity {
             @Override
             protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
                 Toast.makeText(SubjectDetailActivity.this, "Loaded notes: " + cursor.getCount(), Toast.LENGTH_LONG).show();
+
+                int counter = cursor.getCount();
+                Note[] notes = new Note[counter];
+                counter = 0;
+                while (cursor.moveToNext()) {
+                    int index0 = cursor.getColumnIndex(StudentsNotebookContract.Note._ID);
+                    int index1 = cursor.getColumnIndex(StudentsNotebookContract.Note.SUBJECT_ID);
+                    int index2 = cursor.getColumnIndex(StudentsNotebookContract.Note.TITLE);
+                    int index3 = cursor.getColumnIndex(StudentsNotebookContract.Note.CONTENT);
+                    Long id = cursor.getLong(index0);
+                    Long subjectId = cursor.getLong(index1);
+                    String title = cursor.getString(index2);
+                    String content = cursor.getString(index3);
+                    notes[counter] = new Note(id, subjectId, title, content);
+                    counter++;
+                }
+
+                Log.e("ARRAY: ", Arrays.toString(notes));
             }
         };
         queryHandler.startQuery(0, null, StudentsNotebookContract.Note.CONTENT_URI, null, Long.toString(subject.getId()), null, null);
     }
 
-    private void insertIntoContentProvider(ContentValues values) {
+    private void insertSubject(ContentValues values) {
         // normal
         //getContentResolver().insert(StudentsNotebookContract.Subject.CONTENT_URI, values);
 
@@ -126,7 +148,24 @@ public class SubjectDetailActivity extends AppCompatActivity {
         queryHandler.startInsert(0, subject, StudentsNotebookContract.Subject.CONTENT_URI, values);
     }
 
-    private void delete() {
+    private void insertNote() {
+        ContentValues values = new ContentValues();
+        values.put(StudentsNotebookContract.Note.SUBJECT_ID, subject.getId());
+        values.put(StudentsNotebookContract.Note.TITLE, "new title");
+        values.put(StudentsNotebookContract.Note.CONTENT, "new content");
+
+        // asynchronne
+        // abstraktna trieda
+        AsyncQueryHandler queryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onInsertComplete(int token, Object cookie, Uri uri) {
+                Toast.makeText(SubjectDetailActivity.this, "New note saved", Toast.LENGTH_LONG).show();
+            }
+        };
+        queryHandler.startInsert(0, null, StudentsNotebookContract.Note.CONTENT_URI, values);
+    }
+
+    private void deleteSubject() {
         // normal
         //getContentResolver().delete(StudentsNotebookContract.Subject.CONTENT_URI, Long.toString(subject.getId()), null);
 
