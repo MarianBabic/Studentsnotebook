@@ -17,17 +17,33 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createTableSubject());
+        db.execSQL(createTableNote());
 
-        insertSampleEntry(db, "vma1");
-        insertSampleEntry(db, "paz1a");
-        insertSampleEntry(db, "paz1b");
+        insertSampleSubject(db, "vma1");
+        insertSampleSubject(db, "paz1a");
+
+        insertSampleNote(db, 1, "sample1", "sample1");
+        insertSampleNote(db, 1, "sample2", "sample2");
+        insertSampleNote(db, 2, "sample3", "sample3");
+        insertSampleNote(db, 2, "sample4", "sample4");
+        insertSampleNote(db, 2, "sample5", "sample5");
+        insertSampleNote(db, 3, "sample6", "sample6");
     }
 
-    private void insertSampleEntry(SQLiteDatabase db, String description) {
+    private void insertSampleSubject(SQLiteDatabase db, String name) {
         ContentValues values = new ContentValues();
-        values.put(StudentsNotebookContract.Subject.NAME, description);
+        values.put(StudentsNotebookContract.Subject.NAME, name);
         values.put(StudentsNotebookContract.Subject.TIMESTAMP, System.currentTimeMillis() / 1000);
         db.insert(StudentsNotebookContract.Subject.TABLE_NAME, null, values);
+    }
+
+    private void insertSampleNote(SQLiteDatabase db, Integer subjectId, String title, String content) {
+        ContentValues values = new ContentValues();
+        values.put(StudentsNotebookContract.Note.SUBJECT_ID, subjectId);
+        values.put(StudentsNotebookContract.Note.TITLE, title);
+        values.put(StudentsNotebookContract.Note.CONTENT, content);
+        values.put(StudentsNotebookContract.Note.TIMESTAMP, System.currentTimeMillis() / 1000);
+        db.insert(StudentsNotebookContract.Note.TABLE_NAME, null, values);
     }
 
     private String createTableSubject() {
@@ -40,6 +56,25 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 StudentsNotebookContract.Subject._ID,
                 StudentsNotebookContract.Subject.NAME,
                 StudentsNotebookContract.Subject.TIMESTAMP
+        );
+    }
+
+//    + " FOREIGN KEY (" + StudentsNotebookContract.Note.SUBJECT_ID + ") REFERENCES " + StudentsNotebookContract.Subject.TABLE_NAME + " (" + StudentsNotebookContract.Subject._ID + "),"
+
+    private String createTableNote() {
+        String sqlTemplate = "CREATE TABLE %s ("
+                + "%s INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "%s INTEGER,"
+                + "%s TEXT,"
+                + "%s TEXT,"
+                + "%s INTEGER)";
+        return String.format(sqlTemplate,
+                StudentsNotebookContract.Note.TABLE_NAME,
+                StudentsNotebookContract.Note._ID,
+                StudentsNotebookContract.Note.SUBJECT_ID,
+                StudentsNotebookContract.Note.TITLE,
+                StudentsNotebookContract.Note.CONTENT,
+                StudentsNotebookContract.Note.TIMESTAMP
         );
     }
 

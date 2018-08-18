@@ -2,11 +2,22 @@ package sk.upjs.vma.studentsnotebook.localdb;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
 public class StudentsNotebookContentProvider extends ContentProvider {
+
+    // uri matcher
+    private static final int SUBJECTS = 1;
+    private static final int NOTES = 2;
+    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    static {
+        sURIMatcher.addURI(StudentsNotebookContract.AUTHORITY, "subject", SUBJECTS);
+        sURIMatcher.addURI(StudentsNotebookContract.AUTHORITY, "note", NOTES);
+    }
 
     private DatabaseOpenHelper databaseOpenHelper;
 
@@ -20,8 +31,28 @@ public class StudentsNotebookContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
-        Cursor cursor = db.query(StudentsNotebookContract.Subject.TABLE_NAME, null,
-                null, null, null, null, null);
+        Cursor cursor = null;
+
+        int match = sURIMatcher.match(uri);
+        switch (match) {
+            case SUBJECTS:
+                Log.e("MATCHER ", "SUBJECTS");
+                cursor = db.query(StudentsNotebookContract.Subject.TABLE_NAME, null,
+                        null, null, null, null, null);
+                break;
+            case NOTES:
+                Log.e("MATCHER", "NOTES");
+                String[] whereArgs = {selection};
+                cursor = db.query(StudentsNotebookContract.Note.TABLE_NAME,
+                        null,
+                        StudentsNotebookContract.Note.SUBJECT_ID + "=?",
+                        whereArgs,
+                        null,
+                        null,
+                        null,
+                        null);
+                break;
+        }
         return cursor;
     }
 

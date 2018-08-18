@@ -2,6 +2,7 @@ package sk.upjs.vma.studentsnotebook.activity;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,8 @@ public class SubjectDetailActivity extends AppCompatActivity {
         Log.e(SubjectDetailActivity.class.getName(), "DETAIL: " + subject);
 
         editTextSubjectName.setText(subject.getName());
+
+        getNotes();
     }
 
     @Override
@@ -96,6 +99,16 @@ public class SubjectDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getNotes() {
+        AsyncQueryHandler queryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
+                Toast.makeText(SubjectDetailActivity.this, "Loaded notes: " + cursor.getCount(), Toast.LENGTH_LONG).show();
+            }
+        };
+        queryHandler.startQuery(0, null, StudentsNotebookContract.Note.CONTENT_URI, null, Long.toString(subject.getId()), null, null);
     }
 
     private void insertIntoContentProvider(ContentValues values) {
