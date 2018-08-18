@@ -1,9 +1,14 @@
-package sk.upjs.vma.studentsnotebook;
+package sk.upjs.vma.studentsnotebook.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import sk.upjs.vma.studentsnotebook.R;
+import sk.upjs.vma.studentsnotebook.activity.AboutActivity;
+import sk.upjs.vma.studentsnotebook.activity.SettingsActivity;
+import sk.upjs.vma.studentsnotebook.activity.SubjectListActivity;
 
 public class MainActivity extends AppCompatActivity {
 

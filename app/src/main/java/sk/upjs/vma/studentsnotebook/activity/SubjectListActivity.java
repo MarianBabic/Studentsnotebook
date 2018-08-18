@@ -1,4 +1,4 @@
-package sk.upjs.vma.studentsnotebook;
+package sk.upjs.vma.studentsnotebook.activity;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -17,6 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+
+import sk.upjs.vma.studentsnotebook.R;
+import sk.upjs.vma.studentsnotebook.localdb.StudentsNotebookContract;
+import sk.upjs.vma.studentsnotebook.entity.Subject;
 
 public class SubjectListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 

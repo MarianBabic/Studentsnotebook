@@ -1,4 +1,4 @@
-package sk.upjs.vma.studentsnotebook;
+package sk.upjs.vma.studentsnotebook.localdb;
 
 import android.content.ContentResolver;
 import android.net.Uri;

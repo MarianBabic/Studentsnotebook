@@ -1,4 +1,4 @@
-package sk.upjs.vma.studentsnotebook;
+package sk.upjs.vma.studentsnotebook.activity;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
@@ -10,6 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import sk.upjs.vma.studentsnotebook.R;
+import sk.upjs.vma.studentsnotebook.localdb.StudentsNotebookContract;
+import sk.upjs.vma.studentsnotebook.entity.Subject;
 
 public class SubjectDetailActivity extends AppCompatActivity {
 

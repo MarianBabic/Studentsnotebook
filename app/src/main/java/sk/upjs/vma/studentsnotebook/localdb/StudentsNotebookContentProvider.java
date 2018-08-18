@@ -1,11 +1,10 @@
-package sk.upjs.vma.studentsnotebook;
+package sk.upjs.vma.studentsnotebook.localdb;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 
 public class StudentsNotebookContentProvider extends ContentProvider {
 

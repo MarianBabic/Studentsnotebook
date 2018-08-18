@@ -1,4 +1,4 @@
-package sk.upjs.vma.studentsnotebook;
+package sk.upjs.vma.studentsnotebook.entity;
 
 import android.database.Cursor;
 

@@ -9,36 +9,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SubjectListActivity">
+        <activity android:name=".activity.SubjectListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sk.upjs.vma.studentsnotebook.MainActivity" />
+                android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
-        <activity android:name=".SubjectDetailActivity">
+        <activity android:name=".activity.SubjectDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sk.upjs.vma.studentsnotebook.SubjectListActivity" />
+                android:value="sk.upjs.vma.studentsnotebook.activity.SubjectListActivity" />
         </activity>
-        <activity android:name=".SettingsActivity">
+        <activity android:name=".activity.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sk.upjs.vma.studentsnotebook.MainActivity" />
+                android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
-        <activity android:name=".AboutActivity">
+        <activity android:name=".activity.AboutActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sk.upjs.vma.studentsnotebook.MainActivity" />
+                android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
 
         <provider
-            android:name=".StudentsNotebookContentProvider"
+            android:name=".localdb.StudentsNotebookContentProvider"
             android:authorities="sk.upjs.vma.studentsnotebook"
             android:enabled="true"
             android:exported="false">

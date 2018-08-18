@@ -1,4 +1,4 @@
-package sk.upjs.vma.studentsnotebook;
+package sk.upjs.vma.studentsnotebook.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
