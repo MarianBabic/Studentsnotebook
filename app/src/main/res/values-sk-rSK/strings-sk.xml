@@ -1,0 +1,37 @@
+<resources>
+    <!-- APP -->
+    <string name="app_title">Študentský zápisník</string>
+
+    <!-- SUBJECTS -->
+    <string name="subjects_title">Predmety</string>
+    <string name="subjects_new_subject_hint">Názov predmetu</string>
+    <string name="add_subject_button">Pridaj predmet</string>
+    <string name="delete_subject_button">Zmaž predmet</string>
+
+    <!-- NOTES -->
+    <string name="add_note_button">Pridaj poznámku</string>
+    <string name="notes_new_note_title_hint">Pridaj názov poznámky</string>
+    <string name="notes_new_note_content_hint">Pridaj obsah poznámky</string>
+    <string name="delete_note_button">Zmaž poznámku</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_title">Nastavenia</string>
+
+    <!-- ABOUT -->
+    <string name="about_title">O aplikácii</string>
+    <string name="about_text">
+        Táto aplikácia je určená najmä pre študentov na písanie si poznámok k jednotlivým predmetom. Umožňuje organizáciu predmetov do priečinkov. Ku každému predmetu je možné si zapísať textové poznámky. Neskôr bude možné prikladať aj súbory (napr. pdf prezentáce), pripojť odfotené obrázky. Aplikácia ukladá dáta do lokálnej databázy v mobilnom telefóne. Do budúcna bude umožňený aj prístup na serverovú databázu, čím vznikne možnosť zdieľať si poznámky s ďalšími študentmi.
+    </string>
+    <string name="about_author">Autor: Marian Babic</string>
+
+    <!-- QUIT -->
+    <string name="quit_title">Vypnúť aplikáciu</string>
+
+    <string name="db_error">VYSKYTOL SA PROBLÉM S DATABÁZOU!</string>
+
+    <!--<string name="title_activity_subject_list">SubjectListActivity</string>-->
+    <!--<string name="title_activity_subject_detail">SubjectDetailActivity</string>-->
+    <!--<string name="title_activity_settings">Settings</string>-->
+
+</resources>
+

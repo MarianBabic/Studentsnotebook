@@ -5,14 +5,14 @@
     <!-- SUBJECTS -->
     <string name="subjects_title">Subjects</string>
     <string name="subjects_new_subject_hint">Subject\'s name</string>
-    <string name="add_subject_button">Add Subject</string>
-    <string name="delete_subject_button">Delete Subject</string>
+    <string name="add_subject_button">Add subject</string>
+    <string name="delete_subject_button">Delete subject</string>
 
     <!-- NOTES -->
-    <string name="add_note_button">Add Note</string>
-    <string name="notes_new_note_title_hint">Add Note Title</string>
-    <string name="notes_new_note_content_hint">Add Note Content</string>
-    <string name="delete_note_button">Delete Note</string>
+    <string name="add_note_button">Add note</string>
+    <string name="notes_new_note_title_hint">Add note title</string>
+    <string name="notes_new_note_content_hint">Add note content</string>
+    <string name="delete_note_button">Delete note</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
@@ -20,7 +20,7 @@
     <!-- ABOUT -->
     <string name="about_title">About</string>
     <string name="about_text">
-        Táto aplikácia bude určená pre študentov na písanie si poznámok k jednotlivým predmetom. Bude umožňovať organizáciu predmetov do priečinkov. Ku každému predmetu bude možné písať si textové poznámky, prikladať súbory (napr. pdf prezentáce), pripojť odfotené obrázky. Aplikácia bude ukladať dáta do lokálnej databázy. Do budúcna ju bude možné napojiť na serverovú databázu, čím vznikne možnosť aby si viacerí študenti zdieľali poznámky a uľahčili si tak štúdium :)
+        This application provides students an opportunity to write down notes on particular subjects. It enables to organize subjects in folders. You can write down text notes to each subject. There will be possibility to attach files (ie pdf presentations) or photos in the future. This app stores data in local database in this mobile device. There will be an option to access server-side database in the future, so you will be able to share your notes with other students.
     </string>
     <string name="about_author">Author: Marian Babic</string>
 
@@ -28,9 +28,5 @@
     <string name="quit_title">Quit</string>
 
     <string name="db_error">DB ERROR OCCURED!</string>
-
-    <!--<string name="title_activity_subject_list">SubjectListActivity</string>-->
-    <!--<string name="title_activity_subject_detail">SubjectDetailActivity</string>-->
-    <!--<string name="title_activity_settings">Settings</string>-->
 
 </resources>
