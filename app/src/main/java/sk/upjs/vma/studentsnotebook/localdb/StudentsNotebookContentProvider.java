@@ -7,6 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
+
+import sk.upjs.vma.studentsnotebook.R;
 
 public class StudentsNotebookContentProvider extends ContentProvider {
 
@@ -14,6 +17,7 @@ public class StudentsNotebookContentProvider extends ContentProvider {
     private static final int SUBJECTS = 1;
     private static final int NOTES = 2;
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
     static {
         sURIMatcher.addURI(StudentsNotebookContract.AUTHORITY, "subject", SUBJECTS);
         sURIMatcher.addURI(StudentsNotebookContract.AUTHORITY, "note", NOTES);
@@ -52,7 +56,10 @@ public class StudentsNotebookContentProvider extends ContentProvider {
                         null,
                         null);
                 break;
+            default:
+                showDbError();
         }
+
         return cursor;
     }
 
@@ -60,11 +67,28 @@ public class StudentsNotebookContentProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
         String[] whereArgs = {selection};
-        int affectedRows = db.delete(
-                StudentsNotebookContract.Subject.TABLE_NAME,
-                StudentsNotebookContract.Subject._ID + "=?",
-                whereArgs);
-        getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
+        int affectedRows = 0;
+
+        int match = sURIMatcher.match(uri);
+        switch (match) {
+            case SUBJECTS:
+                affectedRows = db.delete(
+                        StudentsNotebookContract.Subject.TABLE_NAME,
+                        StudentsNotebookContract.Subject._ID + "=?",
+                        whereArgs);
+                getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
+                break;
+            case NOTES:
+                affectedRows = db.delete(
+                        StudentsNotebookContract.Note.TABLE_NAME,
+                        StudentsNotebookContract.Subject._ID + "=?",
+                        whereArgs);
+                getContext().getContentResolver().notifyChange(StudentsNotebookContract.Note.CONTENT_URI, null);
+                break;
+            default:
+                showDbError();
+        }
+
         return affectedRows;
     }
 
@@ -84,14 +108,21 @@ public class StudentsNotebookContentProvider extends ContentProvider {
         int match = sURIMatcher.match(uri);
         switch (match) {
             case SUBJECTS:
+                Log.e("SUBJECTS", "SUBJECTS");
                 id = db.insert(StudentsNotebookContract.Subject.TABLE_NAME, null, values);
                 getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
                 result = Uri.withAppendedPath(StudentsNotebookContract.Subject.CONTENT_URI, String.valueOf(id));
+                break;
             case NOTES:
+                Log.e("NOTES", "NOTES");
                 id = db.insert(StudentsNotebookContract.Note.TABLE_NAME, null, values);
                 getContext().getContentResolver().notifyChange(StudentsNotebookContract.Note.CONTENT_URI, null);
                 result = Uri.withAppendedPath(StudentsNotebookContract.Note.CONTENT_URI, String.valueOf(id));
+                break;
+            default:
+                showDbError();
         }
+
         return result;
     }
 
@@ -100,13 +131,35 @@ public class StudentsNotebookContentProvider extends ContentProvider {
                       String[] selectionArgs) {
         SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
         String[] whereArgs = {selection};
-        int affectedRows = db.update(
-                StudentsNotebookContract.Subject.TABLE_NAME,
-                values,
-                StudentsNotebookContract.Subject._ID + "=?",
-                whereArgs);
-        getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
+        int affectedRows = 0;
+
+        int match = sURIMatcher.match(uri);
+        switch (match) {
+            case SUBJECTS:
+                affectedRows = db.update(
+                        StudentsNotebookContract.Subject.TABLE_NAME,
+                        values,
+                        StudentsNotebookContract.Subject._ID + "=?",
+                        whereArgs);
+                getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
+                break;
+            case NOTES:
+                affectedRows = db.update(
+                        StudentsNotebookContract.Note.TABLE_NAME,
+                        values,
+                        StudentsNotebookContract.Note._ID + "=?",
+                        whereArgs);
+                getContext().getContentResolver().notifyChange(StudentsNotebookContract.Note.CONTENT_URI, null);
+                break;
+            default:
+                showDbError();
+        }
+
         return affectedRows;
+    }
+
+    private void showDbError() {
+        Toast.makeText(getContext(), R.string.db_error, Toast.LENGTH_LONG).show();
     }
 
 }

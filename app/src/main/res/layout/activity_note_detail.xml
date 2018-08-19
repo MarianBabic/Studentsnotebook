@@ -4,32 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sk.upjs.vma.studentsnotebook.activity.SubjectDetailActivity">
+    tools:context=".activity.NoteDetailActivity">
 
     <EditText
-        android:id="@+id/editTextSubjectName"
+        android:id="@+id/editTextNoteTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:hint="@string/subjects_new_subject_hint"
+        android:hint="@string/notes_new_note_title_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-        android:id="@+id/listViewNotes"
-        android:layout_width="257dp"
-        android:layout_height="344dp"
-        android:layout_marginBottom="8dp"
+    <EditText
+        android:id="@+id/editTextNoteContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:paddingTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:hint="@string/notes_new_note_content_hint"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextSubjectName"
-        app:layout_constraintVertical_bias="0.608" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

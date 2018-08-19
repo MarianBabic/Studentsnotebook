@@ -69,7 +69,7 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
     protected void onResume() {
         super.onResume();
 
-        // TODO
+//        adapter.notifyDataSetChanged();
 
 
 //        List<Subject> list = subjectDao.list();

@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,21 +17,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.SubjectListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
+
         <activity android:name=".activity.SubjectDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sk.upjs.vma.studentsnotebook.activity.SubjectListActivity" />
+                android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
+
+        <activity android:name=".activity.NoteDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
+        </activity>
+
         <activity android:name=".activity.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
+
         <activity android:name=".activity.AboutActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -41,9 +52,7 @@
             android:name=".localdb.StudentsNotebookContentProvider"
             android:authorities="sk.upjs.vma.studentsnotebook"
             android:enabled="true"
-            android:exported="false">
-
-        </provider>
+            android:exported="false"></provider>
     </application>
 
 </manifest>

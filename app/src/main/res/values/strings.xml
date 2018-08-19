@@ -5,7 +5,14 @@
     <!-- SUBJECTS -->
     <string name="subjects_title">Subjects</string>
     <string name="subjects_new_subject_hint">Subject\'s name</string>
-    <!--<string name="delete">Delete</string>-->
+    <string name="add_subject_button">Add Subject</string>
+    <string name="delete_subject_button">Delete Subject</string>
+
+    <!-- NOTES -->
+    <string name="add_note_button">Add Note</string>
+    <string name="notes_new_note_title_hint">Add Note Title</string>
+    <string name="notes_new_note_content_hint">Add Note Content</string>
+    <string name="delete_note_button">Delete Note</string>
 
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
@@ -20,9 +27,7 @@
     <!-- QUIT -->
     <string name="quit_title">Quit</string>
 
-    <!-- GENERAL -->
-    <string name="add_new_button">Add</string>
-    <string name="delete_button">Delete</string>
+    <string name="db_error">DB ERROR OCCURED!</string>
 
     <!--<string name="title_activity_subject_list">SubjectListActivity</string>-->
     <!--<string name="title_activity_subject_detail">SubjectDetailActivity</string>-->

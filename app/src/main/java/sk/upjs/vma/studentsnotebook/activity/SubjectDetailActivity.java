@@ -2,6 +2,7 @@ package sk.upjs.vma.studentsnotebook.activity;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,7 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -46,6 +51,7 @@ public class SubjectDetailActivity extends AppCompatActivity {
 
         if (subject.getId() != null)
             getNotes();
+
     }
 
     @Override
@@ -85,7 +91,7 @@ public class SubjectDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.menu_item_delete) {
+        if (id == R.id.deleteSubject) {
             deleteSubject();
             // priznak aby sa subject neukladal po navrate z detail aktivity
             ignoreSaveOnFinish = true;
@@ -93,13 +99,22 @@ public class SubjectDetailActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.addNote) {
+            Intent intent = new Intent(this, NoteDetailActivity.class);
+            intent.putExtra("subject_id", subject.getId());
+            startActivity(intent);
+        }
+
         // v tomto pripade to funguje aj bez nasledovneho kodu
         if (id == android.R.id.home) {
-            finish();
-            // https://developer.android.com/training/implementing-navigation/ancestral.html
-            // dokumentacia odporuca pouzit tuto metodu, ktora obsahuje aj volanie finish
-            // NavUtils.navigateUpFromSameTask(this);
-            return true;
+//            finish();
+//            // https://developer.android.com/training/implementing-navigation/ancestral.html
+//            // dokumentacia odporuca pouzit tuto metodu, ktora obsahuje aj volanie finish
+//            // NavUtils.navigateUpFromSameTask(this);
+//            return true;
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -112,7 +127,7 @@ public class SubjectDetailActivity extends AppCompatActivity {
                 Toast.makeText(SubjectDetailActivity.this, "Loaded notes: " + cursor.getCount(), Toast.LENGTH_LONG).show();
 
                 int counter = cursor.getCount();
-                Note[] notes = new Note[counter];
+                final Note[] notes = new Note[counter];
                 counter = 0;
                 while (cursor.moveToNext()) {
                     int index0 = cursor.getColumnIndex(StudentsNotebookContract.Note._ID);
@@ -128,6 +143,24 @@ public class SubjectDetailActivity extends AppCompatActivity {
                 }
 
                 Log.e("ARRAY: ", Arrays.toString(notes));
+
+                ListView lv = findViewById(R.id.listViewNotes);
+//                String[] from = {StudentsNotebookContract.Note.TITLE, StudentsNotebookContract.Note._ID};
+//                int[] to = {R.id.cardId, R.id.cardText};
+                ArrayAdapter<Note> adapter = new ArrayAdapter<>(SubjectDetailActivity.this, R.layout.note, notes);
+//                SimpleCursorAdapter adapter = new SimpleCursorAdapter(SubjectDetailActivity.this, R.layout.subject, null, from, to, 0);
+                lv.setAdapter(adapter);
+
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                        Intent intent = new Intent(SubjectDetailActivity.this,
+                                NoteDetailActivity.class);
+                        intent.putExtra("note", notes[position]);
+                        Log.e("NOTE", notes[position].toString());
+                        startActivity(intent);
+                    }
+                });
             }
         };
         queryHandler.startQuery(0, null, StudentsNotebookContract.Note.CONTENT_URI, null, Long.toString(subject.getId()), null, null);
