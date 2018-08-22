@@ -6,7 +6,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import sk.upjs.vma.studentsnotebook.R;
@@ -40,12 +39,10 @@ public class StudentsNotebookContentProvider extends ContentProvider {
         int match = sURIMatcher.match(uri);
         switch (match) {
             case SUBJECTS:
-                Log.e("MATCHER ", "SUBJECTS");
                 cursor = db.query(StudentsNotebookContract.Subject.TABLE_NAME, null,
                         null, null, null, null, null);
                 break;
             case NOTES:
-                Log.e("MATCHER", "NOTES");
                 String[] whereArgs = {selection};
                 cursor = db.query(StudentsNotebookContract.Note.TABLE_NAME,
                         null,
@@ -108,13 +105,11 @@ public class StudentsNotebookContentProvider extends ContentProvider {
         int match = sURIMatcher.match(uri);
         switch (match) {
             case SUBJECTS:
-                Log.e("SUBJECTS", "SUBJECTS");
                 id = db.insert(StudentsNotebookContract.Subject.TABLE_NAME, null, values);
                 getContext().getContentResolver().notifyChange(StudentsNotebookContract.Subject.CONTENT_URI, null);
                 result = Uri.withAppendedPath(StudentsNotebookContract.Subject.CONTENT_URI, String.valueOf(id));
                 break;
             case NOTES:
-                Log.e("NOTES", "NOTES");
                 id = db.insert(StudentsNotebookContract.Note.TABLE_NAME, null, values);
                 getContext().getContentResolver().notifyChange(StudentsNotebookContract.Note.CONTENT_URI, null);
                 result = Uri.withAppendedPath(StudentsNotebookContract.Note.CONTENT_URI, String.valueOf(id));
