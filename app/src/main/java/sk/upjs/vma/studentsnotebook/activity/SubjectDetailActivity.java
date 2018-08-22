@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.Arrays;
 
 import sk.upjs.vma.studentsnotebook.R;
 import sk.upjs.vma.studentsnotebook.entity.Note;
@@ -45,13 +42,10 @@ public class SubjectDetailActivity extends AppCompatActivity {
         if (subject == null)
             subject = new Subject();
 
-        Log.e(SubjectDetailActivity.class.getName(), "DETAIL: " + subject);
-
         editTextSubjectName.setText(subject.getName());
 
         if (subject.getId() != null)
             getNotes();
-
     }
 
     @Override
@@ -107,14 +101,11 @@ public class SubjectDetailActivity extends AppCompatActivity {
 
         // v tomto pripade to funguje aj bez nasledovneho kodu
         if (id == android.R.id.home) {
-//            finish();
-//            // https://developer.android.com/training/implementing-navigation/ancestral.html
-//            // dokumentacia odporuca pouzit tuto metodu, ktora obsahuje aj volanie finish
-//            // NavUtils.navigateUpFromSameTask(this);
-//            return true;
-
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            finish();
+            // https://developer.android.com/training/implementing-navigation/ancestral.html
+            // dokumentacia odporuca pouzit tuto metodu, ktora obsahuje aj volanie finish
+            // NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -142,13 +133,8 @@ public class SubjectDetailActivity extends AppCompatActivity {
                     counter++;
                 }
 
-                Log.e("ARRAY: ", Arrays.toString(notes));
-
                 ListView lv = findViewById(R.id.listViewNotes);
-//                String[] from = {StudentsNotebookContract.Note.TITLE, StudentsNotebookContract.Note._ID};
-//                int[] to = {R.id.cardId, R.id.cardText};
                 ArrayAdapter<Note> adapter = new ArrayAdapter<>(SubjectDetailActivity.this, R.layout.note, notes);
-//                SimpleCursorAdapter adapter = new SimpleCursorAdapter(SubjectDetailActivity.this, R.layout.subject, null, from, to, 0);
                 lv.setAdapter(adapter);
 
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -157,7 +143,6 @@ public class SubjectDetailActivity extends AppCompatActivity {
                         Intent intent = new Intent(SubjectDetailActivity.this,
                                 NoteDetailActivity.class);
                         intent.putExtra("note", notes[position]);
-                        Log.e("NOTE", notes[position].toString());
                         startActivity(intent);
                     }
                 });
@@ -181,6 +166,22 @@ public class SubjectDetailActivity extends AppCompatActivity {
         queryHandler.startInsert(0, subject, StudentsNotebookContract.Subject.CONTENT_URI, values);
     }
 
+    private void deleteSubject() {
+        // normal
+        //getContentResolver().delete(StudentsNotebookContract.Subject.CONTENT_URI, Long.toString(subject.getId()), null);
+
+        // asynchronne
+        // abstraktna trieda
+        AsyncQueryHandler queryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onDeleteComplete(int token, Object cookie, int result) {
+                Toast.makeText(SubjectDetailActivity.this, "Deleted: " + cookie.toString(), Toast.LENGTH_LONG).show();
+            }
+        };
+        queryHandler.startDelete(0, subject, StudentsNotebookContract.Subject.CONTENT_URI, Long.toString(subject.getId()), null);
+    }
+
+    // for testing purposes only
     private void insertNote() {
         ContentValues values = new ContentValues();
         values.put(StudentsNotebookContract.Note.SUBJECT_ID, subject.getId());
@@ -196,21 +197,6 @@ public class SubjectDetailActivity extends AppCompatActivity {
             }
         };
         queryHandler.startInsert(0, null, StudentsNotebookContract.Note.CONTENT_URI, values);
-    }
-
-    private void deleteSubject() {
-        // normal
-        //getContentResolver().delete(StudentsNotebookContract.Subject.CONTENT_URI, Long.toString(subject.getId()), null);
-
-        // asynchronne
-        // abstraktna trieda
-        AsyncQueryHandler queryHandler = new AsyncQueryHandler(getContentResolver()) {
-            @Override
-            protected void onDeleteComplete(int token, Object cookie, int result) {
-                Toast.makeText(SubjectDetailActivity.this, "Deleted: " + cookie.toString(), Toast.LENGTH_LONG).show();
-            }
-        };
-        queryHandler.startDelete(0, subject, StudentsNotebookContract.Subject.CONTENT_URI, Long.toString(subject.getId()), null);
     }
 
 }

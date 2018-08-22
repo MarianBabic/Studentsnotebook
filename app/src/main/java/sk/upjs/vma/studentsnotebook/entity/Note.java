@@ -65,7 +65,7 @@ public class Note implements Serializable {
 
     @Override
     public String toString() {
-        return subjectId + ": " + title;
+        return title;
     }
 
     public static Note newInstance(Cursor c) {

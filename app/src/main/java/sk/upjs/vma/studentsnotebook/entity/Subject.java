@@ -39,12 +39,12 @@ public class Subject implements Serializable {
         return name;
     }
 
-    public static Subject newInstance(Cursor c){
+    public static Subject newInstance(Cursor c) {
         Subject subject = new Subject();
         int _id = c.getInt(c.getColumnIndex("_id"));
         subject.setId((long) _id);
         String _name = c.getString(c.getColumnIndex("name"));
-        subject.setName( _name);
+        subject.setName(_name);
         return subject;
     }
 

@@ -39,7 +39,7 @@
             android:label="@string/notes_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sk.upjs.vma.studentsnotebook.activity.SubjectListActivity" />
+                android:value="sk.upjs.vma.studentsnotebook.activity.SubjectDetailActivity" />
         </activity>
 
         <activity

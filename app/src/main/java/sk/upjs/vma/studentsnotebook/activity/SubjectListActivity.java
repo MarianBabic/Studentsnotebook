@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +24,7 @@ import sk.upjs.vma.studentsnotebook.entity.Subject;
 public class SubjectListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private ListView listView;
-
     private static final int SUBJECTS_LOADER_ID = 0;
-
     private SimpleCursorAdapter adapter;
 
     @Override
@@ -44,13 +41,9 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
                 Cursor c = (Cursor) adapter.getItem(position);
                 Subject subject = Subject.newInstance(c);
 
-                Log.e(SubjectListActivity.class.getName(), "LIST: " + subject);
-
                 Intent intent = new Intent(SubjectListActivity.this,
                         SubjectDetailActivity.class);
-
                 intent.putExtra("Subject", subject);
-
                 startActivity(intent);
             }
         });
@@ -58,9 +51,7 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
 
     private ListAdapter initializeAdapter() {
         String[] from = {StudentsNotebookContract.Subject.NAME, StudentsNotebookContract.Subject._ID};
-        // TODO: R.id.editTextSubjectName / R.id.cardText
         int[] to = {R.id.cardId, R.id.cardText};
-        // TODO: R.layout.activity_subject_detail / R.layout.subject
         this.adapter = new SimpleCursorAdapter(this, R.layout.subject, null, from, to, 0);
         return this.adapter;
     }
@@ -89,12 +80,6 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.addNewSubject) {
-            Log.d("Hello", "vytvorenie novej aktivity");
-
-            /*Uri uri = Uri.parse("https://www.upjs.sk/");
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);*/
-
             Intent intent = new Intent(this, SubjectDetailActivity.class);
             startActivity(intent);
         }
@@ -116,8 +101,6 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         adapter.swapCursor(cursor);
-        // TODO: ked to odkomentujem pada subject list activity
-//        cursor.setNotificationUri(getContentResolver(), StudentsNotebookContract.Subject.CONTENT_URI);
     }
 
     @Override

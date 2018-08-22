@@ -2,11 +2,9 @@ package sk.upjs.vma.studentsnotebook.activity;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -41,8 +39,6 @@ public class NoteDetailActivity extends AppCompatActivity {
             Long subjectId = (Long) getIntent().getSerializableExtra("subject_id");
             note.setSubjectId(subjectId);
         }
-
-        Log.e(NoteDetailActivity.class.getName(), "NOTE DETAIL: " + note);
 
         editTextNoteTitle.setText(note.getTitle());
         editTextNoteContent.setText(note.getContent());
@@ -92,23 +88,17 @@ public class NoteDetailActivity extends AppCompatActivity {
             deleteNote();
             // priznak aby sa note neukladal po navrate z detail aktivity
             ignoreSaveOnFinish = true;
-//            finish();
-//            return true;
-
-            Intent intent = new Intent(this, SubjectListActivity.class);
-            startActivity(intent);
+            finish();
+            return true;
         }
 
         // v tomto pripade to funguje aj bez nasledovneho kodu
         if (id == android.R.id.home) {
-//            finish();
-//            // https://developer.android.com/training/implementing-navigation/ancestral.html
-//            // dokumentacia odporuca pouzit tuto metodu, ktora obsahuje aj volanie finish
-//            // NavUtils.navigateUpFromSameTask(this);
-//            return true;
-
-            Intent intent = new Intent(this, SubjectListActivity.class);
-            startActivity(intent);
+            finish();
+            // https://developer.android.com/training/implementing-navigation/ancestral.html
+            // dokumentacia odporuca pouzit tuto metodu, ktora obsahuje aj volanie finish
+            // NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
