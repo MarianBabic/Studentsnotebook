@@ -54,6 +54,12 @@ public class SubjectDetailActivity extends AppCompatActivity {
         saveSubject();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getNotes();
+    }
+
     private void saveSubject() {
         // v pripade ze sa odstranuje subject a nema byt ulozeny
         if (ignoreSaveOnFinish) {
