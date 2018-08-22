@@ -18,31 +18,41 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.SubjectListActivity">
+        <activity
+            android:name=".activity.SubjectListActivity"
+            android:label="@string/subjects_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
 
-        <activity android:name=".activity.SubjectDetailActivity">
+        <activity
+            android:name=".activity.SubjectDetailActivity"
+            android:label="@string/subjects_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
 
-        <activity android:name=".activity.NoteDetailActivity">
+        <activity
+            android:name=".activity.NoteDetailActivity"
+            android:label="@string/notes_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
 
-        <activity android:name=".activity.SettingsActivity">
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/settings_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
         </activity>
 
-        <activity android:name=".activity.AboutActivity">
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/about_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />

@@ -9,6 +9,7 @@
     <string name="delete_subject_button">Zmaž predmet</string>
 
     <!-- NOTES -->
+    <string name="notes_title">Poznámky</string>
     <string name="add_note_button">Pridaj poznámku</string>
     <string name="notes_new_note_title_hint">Pridaj názov poznámky</string>
     <string name="notes_new_note_content_hint">Pridaj obsah poznámky</string>
@@ -28,10 +29,6 @@
     <string name="quit_title">Vypnúť aplikáciu</string>
 
     <string name="db_error">VYSKYTOL SA PROBLÉM S DATABÁZOU!</string>
-
-    <!--<string name="title_activity_subject_list">SubjectListActivity</string>-->
-    <!--<string name="title_activity_subject_detail">SubjectDetailActivity</string>-->
-    <!--<string name="title_activity_settings">Settings</string>-->
 
 </resources>
 

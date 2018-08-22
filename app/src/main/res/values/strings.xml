@@ -9,6 +9,7 @@
     <string name="delete_subject_button">Delete subject</string>
 
     <!-- NOTES -->
+    <string name="notes_title">Notes</string>
     <string name="add_note_button">Add note</string>
     <string name="notes_new_note_title_hint">Add note title</string>
     <string name="notes_new_note_content_hint">Add note content</string>
