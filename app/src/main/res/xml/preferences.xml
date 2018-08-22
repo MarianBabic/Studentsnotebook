@@ -15,12 +15,13 @@
 
     <PreferenceCategory android:title="@string/preferences_category_music">
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="@string/music_chkbox_key"
             android:summary="@string/music_chkbox_summary"
             android:title="@string/music_chkbox_title" />
 
         <ListPreference
+            android:defaultValue="drums"
             android:entries="@array/music_entries"
             android:entryValues="@array/music_entries"
             android:key="@string/music_key"

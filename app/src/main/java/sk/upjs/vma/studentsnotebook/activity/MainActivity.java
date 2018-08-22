@@ -1,6 +1,7 @@
 package sk.upjs.vma.studentsnotebook.activity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,9 @@ public class MainActivity extends AppCompatActivity {
     private Intent subjectsActivityIntent;
     private Intent settingsActivityIntent;
     private Intent aboutActivityIntent;
+
+    static MediaPlayer mediaPlayer;
+    static int musicfile = R.raw.drums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

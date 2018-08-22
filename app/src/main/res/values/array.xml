@@ -6,8 +6,7 @@
     </string-array>
 
     <string-array name="music_entries">
-        <item name="1">Kalimba</item>
-        <item name="2">Maid with the Flaxen Hair</item>
-        <item name="3">Sleep Away</item>
+        <item name="1">drums</item>
+        <item name="2">synth_bass</item>
     </string-array>
 </resources>

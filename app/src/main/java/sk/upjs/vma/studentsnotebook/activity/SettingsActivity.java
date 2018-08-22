@@ -2,6 +2,7 @@ package sk.upjs.vma.studentsnotebook.activity;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -31,6 +32,58 @@ public class SettingsActivity extends PreferenceActivity {
                         return true;
                     }
                 });
+
+        final String music_chkbox_key = getResources().getString(R.string.music_chkbox_key);
+        this.findPreference(music_chkbox_key).setOnPreferenceChangeListener(
+                new OnPreferenceChangeListener() {
+
+                    @Override
+                    public boolean onPreferenceChange(Preference preference,
+                                                      Object newValue) {
+                        if (Boolean.valueOf(newValue.toString()) == true) {
+                            startMusic();
+                        } else {
+                            stopMusic();
+                        }
+                        return true;
+                    }
+                });
+
+        String music_key = getResources().getString(R.string.music_key);
+        this.findPreference(music_key).setOnPreferenceChangeListener(
+                new OnPreferenceChangeListener() {
+
+                    @Override
+                    public boolean onPreferenceChange(Preference preference,
+                                                      Object newValue) {
+                        switch (newValue.toString()) {
+                            case ("drums"):
+                                MainActivity.musicfile = R.raw.drums;
+                                break;
+                            case ("synth_bass"):
+                                MainActivity.musicfile = R.raw.synth_bass;
+                        }
+
+                        if (MainActivity.mediaPlayer != null) {
+                            stopMusic();
+                            startMusic();
+                        }
+                        return true;
+                    }
+                });
+    }
+
+    private void startMusic() {
+        MainActivity.mediaPlayer = MediaPlayer.create(this, MainActivity.musicfile);
+        MainActivity.mediaPlayer.setLooping(true);
+        MainActivity.mediaPlayer.start();
+    }
+
+    private void stopMusic() {
+        if (MainActivity.mediaPlayer != null) {
+            MainActivity.mediaPlayer.release();
+            MainActivity.mediaPlayer = null;
+        }
     }
 
     /**
