@@ -26,7 +26,7 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
 
     private ListView listView;
 
-    private static final int SUBJECTS_LOADER_ID = 3;
+    private static final int SUBJECTS_LOADER_ID = 0;
 
     private SimpleCursorAdapter adapter;
 
@@ -66,35 +66,17 @@ public class SubjectListActivity extends AppCompatActivity implements LoaderMana
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        adapter.notifyDataSetInvalidated();
+        adapter.changeCursor(null);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-
-//        adapter.notifyDataSetChanged();
-
-
-//        List<Subject> list = subjectDao.list();
-//
-//        ListAdapter adapter = new ArrayAdapter<Subject>(this,
-//                android.R.layout.simple_list_item_1, list) {
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                TextView listItemView = (TextView) super.getView(position, convertView, parent);
-//
-//                Subject subject = getItem(position);
-//
-//                listItemView.setText(subject.getName());
-//                return listItemView;
-//            }
-//        };
-//
-//        // adapter sa nastavuje v onResume, aby sa zoznam aktualizoval pri navrate z DetailActivity
-//        listView.setAdapter(adapter);
-
-        // TODO
-
-//        this.listView = findViewById(R.id.listViewSubjects);
-//        this.listView.setAdapter(initializeAdapter());
-//        getLoaderManager().initLoader(SUBJECTS_LOADER_ID, Bundle.EMPTY, this);
+        Cursor c = getContentResolver().query(StudentsNotebookContract.Subject.CONTENT_URI, null, null, null, null);
+        adapter.swapCursor(c);
     }
 
     @Override

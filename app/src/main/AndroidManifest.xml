@@ -31,7 +31,7 @@
             android:label="@string/subjects_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
+                android:value="sk.upjs.vma.studentsnotebook.activity.SubjectListActivity" />
         </activity>
 
         <activity
@@ -39,7 +39,7 @@
             android:label="@string/notes_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="sk.upjs.vma.studentsnotebook.activity.MainActivity" />
+                android:value="sk.upjs.vma.studentsnotebook.activity.SubjectListActivity" />
         </activity>
 
         <activity
