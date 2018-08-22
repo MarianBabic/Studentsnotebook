@@ -17,6 +17,19 @@
 
     <!-- SETTINGS -->
     <string name="settings_title">Settings</string>
+    <string name="preferences_category_general">General</string>
+    <string name="languages_key">languages_key</string>
+    <string name="languages_summary">Choose the language.</string>
+    <string name="languages_title">Language</string>
+    <string name="languages_en">English</string>
+    <string name="languages_sk">Slovak</string>
+    <string name="preferences_category_music">Music</string>
+    <string name="music_chkbox_key">music_chkbox_key</string>
+    <string name="music_chkbox_summary">Toogle the background music.</string>
+    <string name="music_chkbox_title">Background music</string>
+    <string name="music_key">music_key</string>
+    <string name="music_summary">Choose the song.</string>
+    <string name="music_title">Song</string>
 
     <!-- ABOUT -->
     <string name="about_title">About</string>

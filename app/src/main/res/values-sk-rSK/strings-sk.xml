@@ -17,6 +17,19 @@
 
     <!-- SETTINGS -->
     <string name="settings_title">Nastavenia</string>
+    <string name="preferences_category_general">Všeobecné</string>
+    <string name="languages_key">languages_key</string>
+    <string name="languages_summary">Zvoľ si jazyk.</string>
+    <string name="languages_title">Jazyk</string>
+    <string name="languages_en">Angličtina</string>
+    <string name="languages_sk">Slovenčina</string>
+    <string name="preferences_category_music">Hudba</string>
+    <string name="music_chkbox_key">music_chkbox_key</string>
+    <string name="music_chkbox_summary">Počúvaj hudbu na pozadí.</string>
+    <string name="music_chkbox_title">Hudba na pozadí</string>
+    <string name="music_key">music_key</string>
+    <string name="music_summary">Zvoľ si pieseň.</string>
+    <string name="music_title">Pieseň</string>
 
     <!-- ABOUT -->
     <string name="about_title">O aplikácii</string>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="Language"
+        android:title="@string/preferences_category_general">
+
+        <ListPreference
+            android:entries="@array/languages_entries"
+            android:entryValues="@array/languages_entries"
+            android:key="@string/languages_key"
+            android:summary="@string/languages_summary"
+            android:title="@string/languages_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preferences_category_music">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/music_chkbox_key"
+            android:summary="@string/music_chkbox_summary"
+            android:title="@string/music_chkbox_title" />
+
+        <ListPreference
+            android:entries="@array/music_entries"
+            android:entryValues="@array/music_entries"
+            android:key="@string/music_key"
+            android:summary="@string/music_summary"
+            android:title="@string/music_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
