@@ -183,6 +183,8 @@ public class SubjectDetailActivity extends AppCompatActivity {
             @Override
             protected void onDeleteComplete(int token, Object cookie, int result) {
                 Toast.makeText(SubjectDetailActivity.this, "Deleted: " + cookie.toString(), Toast.LENGTH_LONG).show();
+                // delete all notes related to this subject
+                getContentResolver().delete(StudentsNotebookContract.Note.CONTENT_URI, Long.toString(subject.getId()), null);
             }
         };
         queryHandler.startDelete(0, subject, StudentsNotebookContract.Subject.CONTENT_URI, Long.toString(subject.getId()), null);
