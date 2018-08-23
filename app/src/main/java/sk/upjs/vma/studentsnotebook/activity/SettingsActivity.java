@@ -41,9 +41,9 @@ public class SettingsActivity extends PreferenceActivity {
                     public boolean onPreferenceChange(Preference preference,
                                                       Object newValue) {
                         if (Boolean.valueOf(newValue.toString()) == true) {
-                            startMusic();
+                            MainActivity.startMusic(getBaseContext());
                         } else {
-                            stopMusic();
+                            MainActivity.stopMusic();
                         }
                         return true;
                     }
@@ -65,25 +65,12 @@ public class SettingsActivity extends PreferenceActivity {
                         }
 
                         if (MainActivity.mediaPlayer != null) {
-                            stopMusic();
-                            startMusic();
+                            MainActivity.stopMusic();
+                            MainActivity.startMusic(getBaseContext());
                         }
                         return true;
                     }
                 });
-    }
-
-    private void startMusic() {
-        MainActivity.mediaPlayer = MediaPlayer.create(this, MainActivity.musicfile);
-        MainActivity.mediaPlayer.setLooping(true);
-        MainActivity.mediaPlayer.start();
-    }
-
-    private void stopMusic() {
-        if (MainActivity.mediaPlayer != null) {
-            MainActivity.mediaPlayer.release();
-            MainActivity.mediaPlayer = null;
-        }
     }
 
     /**
