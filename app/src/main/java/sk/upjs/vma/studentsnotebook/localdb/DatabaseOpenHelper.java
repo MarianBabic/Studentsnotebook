@@ -19,16 +19,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL(createTableSubject());
         db.execSQL(createTableNote());
 
-        insertSampleSubject(db, "vma1");
-        insertSampleSubject(db, "paz1a");
-        insertSampleSubject(db, "paz1b");
+//        insertSampleSubject(db, "vma1");
 
-        insertSampleNote(db, 1, "sample1", "sample1");
-        insertSampleNote(db, 1, "sample2", "sample2");
-        insertSampleNote(db, 2, "sample3", "sample3");
-        insertSampleNote(db, 2, "sample4", "sample4");
-        insertSampleNote(db, 2, "sample5", "sample5");
-        insertSampleNote(db, 3, "sample6", "sample6");
+//        insertSampleNote(db, 1, "sample title", "sample content");
     }
 
     private void insertSampleSubject(SQLiteDatabase db, String name) {

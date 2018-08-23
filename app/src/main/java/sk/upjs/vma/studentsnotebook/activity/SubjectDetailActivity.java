@@ -57,7 +57,8 @@ public class SubjectDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getNotes();
+        if (subject.getId() != null)
+            getNotes();
     }
 
     private void saveSubject() {
